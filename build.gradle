@@ -1,0 +1,43 @@
+plugins {
+  id 'io.spring.dependency-management' version '1.0.0.RC2'
+}
+ 
+dependencyManagement {
+  imports {
+    mavenBom 'org.apache.logging.log4j:log4j-bom:2.8.1'
+  }
+}
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    // The production code uses the SLF4J logging API at compile time
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile 'org.apache.logging.log4j:log4j-api'
+    compile 'org.apache.logging.log4j:log4j-core'
+    compile 'junit:junit:4.12'
+    // Declare the dependency for your favourite test framework you want to use in your tests.
+    // TestNG is also supported by the Gradle Test task. Just change the
+    // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
+    // 'test.useTestNG()' to your build script.
+    testCompile 'junit:junit:4.12'
+}
+
+sourceSets {
+    main.java.srcDirs 'C7_3/'
+    main.resources { 
+        srcDirs = ["C7_3/src"];
+        exclude "**/*.java"
+    }
+    test.java.srcDir 'C7_3/src/test/'
+}
+
+jar{
+    from configurations.compile.collect { zipTree it }
+    manifest.attributes "Main-Class": "sample.Main"
+    from "data/Students.txt"
+}
