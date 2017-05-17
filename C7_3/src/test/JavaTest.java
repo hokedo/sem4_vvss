@@ -10,6 +10,6 @@ public class JavaTest{
       int value1 = 3;
       int value2 = 4;
       double result = value1 + value2;
-      assertTrue(result == 7);
+      assertTrue(result == 10);
    }
 }
